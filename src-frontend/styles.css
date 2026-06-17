@@ -2291,7 +2291,9 @@ button.secondary.btn-loading::before {
 
 /* ── Desktop (≥ 769px): single-column grid foundation ─────────────────── */
 @media (min-width: 769px) {
-  #assayScreen {
+  body.state-configured #assayScreen,
+  body.state-poised #assayScreen,
+  body.state-running #assayScreen {
     display: grid;
     grid-template-rows: auto 1fr auto;
     grid-template-columns: 1fr;
