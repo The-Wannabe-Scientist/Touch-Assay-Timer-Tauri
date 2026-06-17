@@ -60,6 +60,12 @@ let isReady = false;
 
 // ── Speech state ─────────────────────────────────────────────────────────────
 
+/** 
+ * WebKit/Safari bug workaround: if a SpeechSynthesisUtterance is not referenced 
+ * by a JS variable, it can be garbage collected before it finishes speaking. 
+ * We hold a reference to the active utterance here. 
+ */
+let currentUtterance = null;
 
 /* ==========================================================================
    Public Getters & Setters
@@ -255,18 +261,24 @@ export function speak(text) {
   speechSynthesis.cancel();  // Flush any queued utterances to prevent lag drift
 
   // Safari (and some Chromium builds) silently drop a speak() call issued in
-  // the same task as cancel(). Deferring via queueMicrotask ensures the cancel
-  // completes before the new utterance is enqueued, while avoiding the 1–16 ms
-  // latency penalty of setTimeout(fn, 0) which is subject to browser clamping.
-  // Microtasks run at the end of the current task — effectively ~0 ms delay —
-  // and are more than offset by the SPEECH_LEAD_TIME advance in main.js.
-  queueMicrotask(() => {
-    const utterance = new SpeechSynthesisUtterance(text);
-    if (selectedVoice)         utterance.voice = selectedVoice;
-    utterance.rate  = speechConfig.rate;
-    utterance.pitch = speechConfig.pitch;
-    speechSynthesis.speak(utterance);
-  });
+  // the same task as cancel(). Deferring via setTimeout ensures the cancel
+  // completes before the new utterance is enqueued. queueMicrotask is not
+  // sufficient on WebKit because it executes in the same event loop tick.
+  setTimeout(() => {
+    currentUtterance = new SpeechSynthesisUtterance(text);
+    if (selectedVoice)         currentUtterance.voice = selectedVoice;
+    currentUtterance.rate  = speechConfig.rate;
+    currentUtterance.pitch = speechConfig.pitch;
+    
+    // Clear reference on end to avoid holding memory indefinitely
+    currentUtterance.onend = () => {
+      if (currentUtterance && currentUtterance.text === text) {
+        currentUtterance = null;
+      }
+    };
+    
+    speechSynthesis.speak(currentUtterance);
+  }, 50);
 }
 
 /**
@@ -284,10 +296,10 @@ export function speak(text) {
 export function primeSpeechEngine() {
   if (typeof speechSynthesis === "undefined") return;
   if (!selectedVoice) loadVoices();
-  const u = new SpeechSynthesisUtterance(" ");  // Single space — inaudible
-  if (selectedVoice) u.voice = selectedVoice;
-  u.volume = 0;  // Silent
-  speechSynthesis.speak(u);
+  currentUtterance = new SpeechSynthesisUtterance(" ");  // Single space — inaudible
+  if (selectedVoice) currentUtterance.voice = selectedVoice;
+  currentUtterance.volume = 0;  // Silent
+  speechSynthesis.speak(currentUtterance);
 }
 
 /**

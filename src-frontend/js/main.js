@@ -1573,12 +1573,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Sort newest first
     let html = "";
     assays.sort((a, b) => b.createdAt - a.createdAt).forEach(assay => {
+      const genotypesStr = assay.genotypes && assay.genotypes.length ? ` (${assay.genotypes.map(escapeHTML).join(", ")})` : "";
       html += `
         <div class="saved-assay-row">
           <div class="assay-row-header">
             <input type="checkbox" class="assay-select-checkbox" data-assay-id="${assay.assayId}">
             <div class="assay-info">
-              ${escapeHTML(assay.assayName) || "Untitled"} — ${assay.createdAt ? new Date(assay.createdAt).toLocaleString() : "Unknown date"}
+              ${escapeHTML(assay.assayName) || "Untitled"}${genotypesStr} — ${assay.createdAt ? new Date(assay.createdAt).toLocaleString() : "Unknown date"}
             </div>
           </div>
           <div class="assay-actions">
