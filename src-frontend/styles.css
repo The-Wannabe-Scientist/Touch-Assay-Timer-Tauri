@@ -750,10 +750,20 @@ button.danger:active {
 
   transition: transform 40ms linear, background-color 50ms linear;
 
-  /* Ensure long text labels don't break layout */
+  /* Allow long text labels to wrap instead of cutting off */
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.2;
+  padding: 10px 20px;
+  
+  /* Safeguard to ensure wrapping text doesn't burst out of flex containers */
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 /* Desktop: tap button grows larger since there is more vertical real-estate */
