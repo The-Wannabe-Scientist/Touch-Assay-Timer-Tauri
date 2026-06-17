@@ -1,7 +1,157 @@
-# Touch Assay Timer — Tauri Desktop App
+# ============================================================
+#  Touch Assay Timer — .gitignore
+# ============================================================
 
-node_modules/
-dist/
-target/
+
+# ── macOS ────────────────────────────────────────────────────
 .DS_Store
+.DS_Store?
+._*
+.AppleDouble
+.LSOverride
+.Spotlight-V100
+.Trashes
+.fseventsd
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+# Finder-created network share artefacts
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+
+
+# ── Windows ──────────────────────────────────────────────────
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+*.stackdump
+
+
+# ── Linux ────────────────────────────────────────────────────
+*~
+.nfs*
+
+
+# ── Editors & IDEs ───────────────────────────────────────────
+# VS Code
+.vscode/
+!.vscode/extensions.json   # allow sharing recommended extensions
+
+# JetBrains (IntelliJ, CLion, RustRover, WebStorm, etc.)
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Vim / Neovim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+Session.vim
+Sessionx.vim
+.netrwhist
+tags
+[._]*.un~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# Sublime Text
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
+
+# TextMate
+*.tmproj
+*.tmproject
+tmtags
+
+
+# ── Node / npm ───────────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.npm
+.yarn-integrity
+.pnp.*
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+# Build output
+dist/
+dist-ssr/
+build/
+.vite/
+.cache/
+
+# TypeScript
+*.tsbuildinfo
+
+
+# ── Rust / Cargo ─────────────────────────────────────────────
+target/
+# Cargo.lock should be committed for binaries; remove this line if you switch
+# to a library-only crate.
+# Cargo.lock
+
+# Criterion benchmark artefacts
+criterion/
+
+
+# ── Tauri ────────────────────────────────────────────────────
+# Generated at build time — never commit these
+src-tauri/gen/
+src-tauri/target/
+WixTools*/
+
+
+# ── Environment & secrets ────────────────────────────────────
+.env
+.env.*
+.env.local
+.env.*.local
+!.env.example      # allow committing a documented example file
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+
+
+# ── Logs & diagnostics ───────────────────────────────────────
+logs/
 *.log
+*.log.*
+*.log-[0-9]*
+
+
+# ── Miscellaneous ────────────────────────────────────────────
+*.bak
+*.swp
+*.tmp
+*.orig
+.cache
+.parcel-cache
+.turbo
