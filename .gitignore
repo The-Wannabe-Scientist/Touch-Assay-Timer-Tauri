@@ -1,0 +1,7 @@
+# Touch Assay Timer — Tauri Desktop App
+
+node_modules/
+dist/
+target/
+.DS_Store
+*.log

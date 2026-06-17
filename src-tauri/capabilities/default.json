@@ -1,0 +1,10 @@
+{
+  "identifier": "default",
+  "description": "Default permissions for Touch Assay Timer",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "dialog:allow-save",
+    "dialog:allow-open"
+  ]
+}

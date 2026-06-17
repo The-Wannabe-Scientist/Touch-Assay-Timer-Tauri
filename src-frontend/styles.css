@@ -1,0 +1,2503 @@
+/* =====================================================================
+   1. DESIGN TOKENS (CSS VARIABLES)
+   ===================================================================== */
+
+:root {
+  color-scheme: light;
+
+  --bg-body:          #f1f5f9;
+  --bg-card:          #ffffff;
+  --bg-header:        #0f172a;
+  --bg-input:         #f8fafc;
+  --bg-input-focus:   #ffffff;
+  --bg-progress:      #f8fafc;
+  --bg-table-header:  #f1f5f9;
+
+  --text-main:        #0f172a;
+  --text-muted:       #475569;
+  --text-header:      #f8fafc;
+  --text-placeholder: #94a3b8;
+
+  --border-base:  #e2e8f0;
+  --border-input: #cbd5e1;
+  --focus-ring:   rgba(99, 102, 241, 0.18);
+
+  --color-primary:       #4f46e5;
+  --color-primary-hover: #4338ca;
+  --color-primary-shadow: rgba(79, 70, 229, 0.28);
+  --color-danger:        #dc2626;
+  --color-danger-shadow: rgba(220, 38, 38, 0.25);
+  --color-secondary-bg:  #e2e8f0;
+  --color-secondary-hover: #cbd5e1;
+
+  --bg-warning:    #fef2f2;
+  --border-warning:#fecaca;
+  --text-warning:  #b91c1c;
+
+  --tap-bg:              linear-gradient(145deg, #f8fafc, #e2e8f0);
+  --tap-text:            #0f172a;
+  --tap-active:          #dde3ef;
+  --tap-flash:           #e0e7ff;
+  --color-success:       #16a34a;
+  --tap-fulfilled:       #dcfce7;
+  --tap-fulfilled-border:#86efac;
+  --tap-fulfilled-flash: #bbf7d0;
+
+  /* Chip colours */
+  --chip-bg:      #e0e7ff;
+  --chip-text:    #3730a3;
+  --chip-border:  #c7d2fe;
+  --chip-remove:  #818cf8;
+
+  /* Stepper */
+  --stepper-btn-bg:    #e2e8f0;
+  --stepper-btn-hover: #cbd5e1;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg-body:         #0b1120;
+  --bg-card:         #111827;
+  --bg-header:       #060d1a;
+  --bg-input:        #1e293b;
+  --bg-input-focus:  #0f172a;
+  --bg-progress:     #111827;
+  --bg-table-header: #1e293b;
+
+  --text-main:       #f1f5f9;
+  --text-muted:      #94a3b8;
+  --text-header:     #f1f5f9;
+  --text-placeholder:#475569;
+
+  --border-base:  #1e293b;
+  --border-input: #334155;
+  --focus-ring:   rgba(99, 102, 241, 0.25);
+
+  --bg-warning:    #450a0a;
+  --border-warning:#7f1d1d;
+  --text-warning:  #fca5a5;
+
+  --tap-bg:              #1e293b;
+  --tap-text:            #f1f5f9;
+  --tap-active:          #0f172a;
+  --tap-flash:           #1e1b4b;
+  --color-success:       #22c55e;
+  --tap-fulfilled:       #052e16;
+  --tap-fulfilled-border:#15803d;
+  --tap-fulfilled-flash: #065f46;
+
+  --chip-bg:     #1e1b4b;
+  --chip-text:   #a5b4fc;
+  --chip-border: #312e81;
+  --chip-remove: #6366f1;
+
+  --stepper-btn-bg:    #1e293b;
+  --stepper-btn-hover: #334155;
+
+  /* Dark-mode button overrides */
+  --color-secondary-bg:    #1e293b;
+  --color-secondary-hover: #334155;
+  --color-primary-shadow:  rgba(99, 102, 241, 0.45);
+  --color-danger-shadow:   rgba(239, 68, 68, 0.4);
+}
+
+/* =====================================================================
+   2. GLOBAL RESET & BASE
+   ===================================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  background: var(--bg-body);
+  color: var(--text-main);
+  line-height: 1.5;
+  padding-bottom: env(safe-area-inset-bottom);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* =====================================================================
+   3. APP HEADER & NAVIGATION MENUS
+   ===================================================================== */
+
+.appHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.9rem max(1rem, calc(50vw - 400px));
+  background: var(--bg-header);
+  color: var(--text-header);
+  position: relative;
+  /* Glassmorphism — subtle depth on dark header */
+  box-shadow: 0 1px 0 rgba(255,255,255,0.06), 0 4px 24px rgba(0,0,0,0.35);
+}
+
+/* ── Logo + title home button ─────────────────────────────────────────── */
+.header-home-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.55rem;
+  border: none;
+  background: transparent;
+  color: var(--text-header);
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.18s ease, transform 0.14s ease;
+}
+.header-home-btn:hover {
+  background: rgba(255,255,255,0.1);
+}
+.header-home-btn:active {
+  transform: scale(0.95);
+  background: rgba(255,255,255,0.05);
+}
+.header-logo {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* ── Header action buttons group (theme toggle + overflow) ────────────── */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.header-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--text-header);
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.14s ease, box-shadow 0.18s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.header-icon-btn:hover {
+  background: rgba(255,255,255,0.15);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+.header-icon-btn:active {
+  transform: scale(0.93);
+  background: rgba(255,255,255,0.05);
+}
+
+/* Legacy fallback removed — #overflowMenuButton now uses .header-icon-btn */
+#overflowMenuButton {
+  font-size: inherit;
+}
+
+#overflowMenu {
+  position: absolute;
+  top: calc(100% + 4px);
+  /* Aligns the menu natively with the constrained header column */
+  right: max(12px, calc(50vw - 400px));
+  background: var(--bg-card);
+  border: 1px solid var(--border-base);
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 180px;
+  z-index: 100;
+}
+
+#overflowMenu button {
+  background: none;
+  border: none;
+  padding: 0.6rem;
+  text-align: left;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--text-main);
+}
+
+#overflowMenu button:active,
+#overflowMenu button:hover {
+  background-color: var(--border-base);
+}
+
+/* =====================================================================
+   4. LAYOUT & SECTIONS (RESPONSIVE CONTAINERS)
+   ===================================================================== */
+
+main {
+  /* Fill all available vertical space so assay tap zone is maximized */
+  min-height: calc(100svh - 60px);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  /* Desktop: lock into a clean central column */
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  /* Prevent content overflow on very small screens */
+  overflow-x: hidden;
+}
+
+section {
+  background: var(--bg-card);
+  border-radius: 14px;
+  padding: 1rem;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.04);
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-base);
+}
+
+h1, h2, h3, legend {
+  color: var(--text-main);
+}
+
+.header-home-btn, .modal-header h2 {
+  color: var(--text-header);
+}
+
+/* =====================================================================
+   5. FORM ELEMENTS & DARK MODE OVERRIDES
+   ===================================================================== */
+
+fieldset {
+  border: none;
+  margin-bottom: 1.25rem;
+  padding: 0;
+}
+
+#setupForm fieldset,
+#settingsScreen fieldset {
+  background: var(--bg-card);
+  border: 1px solid var(--border-base);
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* This provides perfect line-spacing between setting options */
+}
+
+legend {
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 0 0.5rem;
+  margin-left: -0.5rem;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  gap: 0.4rem;
+}
+
+input, select, button, textarea {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.65rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-input);
+  background-color: var(--bg-input);
+  color: var(--text-main);
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  
+  /* Strip Apple/Google native styling curves */
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input::placeholder {
+  color: var(--text-placeholder);
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  background-color: var(--bg-input-focus);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+/* Re-inject custom arrow because we stripped native appearance */
+select {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1em;
+  padding-right: 2.5rem;
+}
+[data-theme="dark"] select {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f9fafb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+}
+
+/* Natively restore radio/checkboxes */
+input[type="checkbox"], input[type="radio"] {
+  -webkit-appearance: auto;
+  appearance: auto;
+  accent-color: var(--color-primary);
+  width: 1.1rem;
+  height: 1.1rem;
+  margin: 0;
+}
+
+select option {
+  background-color: var(--bg-card);
+  color: var(--text-main);
+}
+select option:disabled {
+  color: var(--text-muted);
+}
+
+.required-asterisk {
+  color: var(--color-danger);
+  font-weight: bold;
+  margin-left: 3px;
+}
+
+/* ------------------------------------------------------------------
+   CRITICAL DARK MODE READABILITY FIXES
+   Brute-forces dark backgrounds over browser autofill/iOS defaults 
+------------------------------------------------------------------- */
+[data-theme="dark"] input[type="text"],
+[data-theme="dark"] input[type="number"],
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+    background-color: var(--bg-input) !important;
+    color: var(--text-main) !important;
+    border-color: var(--border-input) !important;
+}
+
+[data-theme="dark"] input[type="text"]:focus,
+[data-theme="dark"] input[type="number"]:focus,
+[data-theme="dark"] select:focus,
+[data-theme="dark"] textarea:focus {
+    background-color: var(--bg-input-focus) !important;
+}
+
+/* WebKit Autofill Dark Mode Override */
+[data-theme="dark"] input:-webkit-autofill,
+[data-theme="dark"] input:-webkit-autofill:hover,
+[data-theme="dark"] input:-webkit-autofill:focus,
+[data-theme="dark"] input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #1e293b inset !important;
+  -webkit-text-fill-color: #f1f5f9 !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Form Layout Responsiveness */
+.input-row {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  flex-wrap: wrap; 
+}
+.input-row > .input-group {
+  flex: 1 1 calc(50% - 0.5rem);
+  min-width: 130px; 
+}
+#setupForm input[type="number"],
+#setupForm input[type="text"] {
+  max-width: none;
+  width: 100%;
+}
+
+/* =====================================================================
+   5b. CHIP / TAG INPUT  (Genotypes)
+   ===================================================================== */
+
+.chip-input-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.65rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border-input);
+  border-radius: 10px;
+  cursor: text;
+  min-height: 44px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.chip-input-wrapper:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+  background: var(--bg-input-focus);
+}
+
+.chip-list {
+  display: contents; /* chips flow inline with the text input */
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.55rem;
+  background: var(--chip-bg);
+  color: var(--chip-text);
+  border: 1px solid var(--chip-border);
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  animation: chipIn 0.18s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes chipIn {
+  from { opacity: 0; transform: scale(0.7); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.chip-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  font-size: 0.65rem;
+  line-height: 1;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  color: var(--chip-remove);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.chip-remove:hover {
+  background: rgba(0,0,0,0.12);
+  color: var(--color-danger);
+}
+
+.chip-text-input {
+  flex: 1;
+  min-width: min(140px, 40%);
+  border: none;
+  background: transparent;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  outline: none;
+  padding: 0.15rem 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.chip-text-input::placeholder {
+  color: var(--text-placeholder);
+}
+
+/* ── Stepper (custom ± number controls) ────────────────────────────── */
+.stepper-wrapper {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--border-input);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--bg-input);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.stepper-wrapper:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+.stepper-btn {
+  flex-shrink: 0;
+  width: 40px;
+  padding: 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 1;
+  background: var(--stepper-btn-bg);
+  border: none;
+  border-radius: 0;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.stepper-btn:hover { background: var(--stepper-btn-hover); color: var(--text-main); }
+.stepper-btn:active { background: var(--border-input); }
+
+/* number input inside stepper: hide native spin arrows, fill remaining width */
+.stepper-wrapper input[type="number"] {
+  flex: 1;
+  border: none;
+  border-left: 1px solid var(--border-input);
+  border-right: 1px solid var(--border-input);
+  border-radius: 0;
+  background: var(--bg-input-focus);
+  text-align: center;
+  font-weight: 600;
+  padding: 0.65rem 0.25rem;
+  min-width: 0;
+  box-shadow: none !important;
+}
+.stepper-wrapper input[type="number"]:focus {
+  outline: none;
+  box-shadow: none !important;
+  border-color: var(--border-input);
+}
+/* Hide spinner arrows */
+.stepper-wrapper input[type="number"]::-webkit-inner-spin-button,
+.stepper-wrapper input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+.stepper-wrapper input[type="number"] { -moz-appearance: textfield; }
+
+[data-theme="dark"] .stepper-wrapper input[type="number"] {
+  background-color: var(--bg-input-focus) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-input) !important;
+}
+
+/* =====================================================================
+   6. STANDARD BUTTONS
+   ===================================================================== */
+
+button {
+  cursor: pointer;
+  color: var(--text-main);
+}
+
+button.primary {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  transition: background 0.18s ease, transform 0.14s ease, box-shadow 0.18s ease;
+}
+button.primary:hover {
+  background: var(--color-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px var(--color-primary-shadow);
+}
+button.primary:active {
+  background: var(--color-primary-hover);
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+button.secondary {
+  background: var(--color-secondary-bg);
+  color: var(--text-main);
+  border: 1px solid var(--border-base);
+  transition: background 0.18s ease, transform 0.14s ease;
+}
+button.secondary:hover {
+  background: var(--color-secondary-hover);
+  transform: translateY(-1px);
+}
+button.secondary:active {
+  background: var(--color-secondary-hover);
+  transform: translateY(0);
+}
+
+button.danger {
+  background: var(--color-danger);
+  color: white;
+  border: none;
+  transition: background 0.18s ease, transform 0.14s ease, box-shadow 0.18s ease;
+}
+button.danger:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px var(--color-danger-shadow);
+}
+button.danger:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+#beginBtn {
+  width: 100%;
+  padding: 0.9rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 12px;
+  letter-spacing: -0.01em;
+  box-shadow: 0 4px 16px var(--color-primary-shadow);
+  margin-top: 0.5rem;
+  background: linear-gradient(135deg, var(--color-primary) 0%, #6366f1 100%);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+#beginBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--color-primary-shadow);
+  filter: brightness(1.05);
+}
+#beginBtn:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 8px var(--color-primary-shadow);
+}
+
+/* =====================================================================
+   7. ASSAY SCREEN & INTERACTIVE TAP ZONE
+   ===================================================================== */
+
+#assayScreen {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  /* Ensures assay screen always fills the available height */
+  min-height: 0;
+}
+
+#assayScreen > header {
+  padding: 0.65rem 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#assayScreen > header select {
+  flex: 1;
+  min-width: 0;
+}
+
+#assayScreen > footer {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+  padding: 0.75rem;
+  /* Stick footer to bottom on all screen sizes */
+  flex-shrink: 0;
+}
+
+#tapZone {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem;
+  gap: 0.6rem;
+  align-items: center;
+  /* Ensure tap zone fills remaining height */
+  min-height: 0;
+}
+
+/* VISUAL METRONOME ANIMATION BAR */
+#visualMetronomeContainer {
+  width: 100%;
+  height: 12px;
+  background: var(--border-base);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+
+#visualMetronomeBar {
+  height: 100%;
+  width: 0%;
+  background: var(--color-primary);
+  transition: none; 
+}
+#visualMetronomeBar.fulfilled {
+  background: var(--color-success);
+}
+
+/* MASSIVE TAP BUTTON */
+#tapButton {
+  flex: 1;
+  width: 100%;
+
+  /* Dynamic minimum height — generous on mobile, grows on desktop via flex:1 */
+  min-height: max(260px, 38vh);
+
+  font-size: clamp(2rem, 7vw, 3.5rem);
+  font-weight: 500;
+  border: none;
+  border-radius: 20px;
+  background: var(--tap-bg);
+  color: var(--tap-text);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  transition: transform 40ms linear, background-color 50ms linear;
+
+  /* Ensure long text labels don't break layout */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Desktop: tap button grows larger since there is more vertical real-estate */
+@media (min-width: 769px) {
+  #tapButton {
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    min-height: max(320px, 40vh);
+    border-radius: 24px;
+  }
+}
+
+#tapButton:active {
+  transform: scale(0.996);
+  background: var(--tap-active);
+}
+
+/* Persistent Fulfilled State (Light Green) */
+#tapButton.bucket-fulfilled {
+  background: var(--tap-fulfilled);
+  border: 2px solid var(--tap-fulfilled-border);
+  color: #064e3b; 
+}
+[data-theme="dark"] #tapButton.bucket-fulfilled {
+  color: #dcfce7; 
+}
+
+/* Transient Flash State (Blue) */
+#tapButton.tapped {
+  background: var(--tap-flash) !important; 
+  transform: scale(0.96) !important;
+  transition: transform 50ms ease-out, background-color 50ms ease-out;
+}
+
+/* Transient Flash State when already green (Deeper Green) */
+#tapButton.bucket-fulfilled.tapped {
+  background: var(--tap-fulfilled-flash) !important;
+}
+
+/* =====================================================================
+   8. PROGRESS PANEL & DATA TABLES
+   ===================================================================== */
+
+.live-progress {
+  text-align: center;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  font-variant-numeric: tabular-nums; 
+}
+
+#assayProgress {
+  max-height: 30vh;
+  overflow: auto;
+  border-radius: 10px;
+  border: 1px solid var(--border-base);
+  padding: 0.5rem;
+  background: var(--bg-progress);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+th, td {
+  padding: 0.5rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border-base);
+}
+
+th {
+  font-weight: 600;
+  background: var(--bg-table-header);
+  color: var(--text-main);
+}
+
+/* =====================================================================
+   9. MODALS & EXPORT PREVIEWS
+   ===================================================================== */
+
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex; justify-content: center; align-items: center;
+  z-index: 1000;
+  padding: max(1rem, env(safe-area-inset-top)) 1rem max(1rem, env(safe-area-inset-bottom));
+}
+
+.modal-content {
+  background: var(--bg-card);
+  border-radius: 14px;
+  width: 100%; max-width: 900px;
+  max-height: 90vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  border: 1px solid var(--border-base);
+}
+
+.modal-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-base);
+}
+
+.modal-header button {
+  background: none; border: none; font-size: 1.5rem;
+  color: var(--text-muted); padding: 0; cursor: pointer;
+}
+
+#previewContainer {
+  flex: 1; overflow: auto; padding: 1.25rem;
+  display: flex; flex-direction: column; gap: 2rem;
+}
+
+.preview-table-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--border-base); 
+  border-radius: 8px;
+}
+
+.preview-table-wrapper table {
+  width: max-content; min-width: 100%;
+  border-collapse: collapse; font-variant-numeric: tabular-nums;
+}
+
+.preview-table-wrapper th, .preview-table-wrapper td {
+  padding: 0.5rem 0.75rem; border: 1px solid var(--border-base);
+  white-space: nowrap; font-size: 0.85rem; text-align: center;
+}
+
+.preview-table-wrapper th {
+  background: var(--bg-table-header); font-weight: 600;
+  position: sticky; top: 0; box-shadow: 0 1px 0 var(--border-base);
+}
+
+.modal-actions {
+  padding: 1rem 1.25rem; border-top: 1px solid var(--border-base);
+  display: flex; justify-content: flex-end;
+}
+
+/* =====================================================================
+   10. UTILITIES, LISTS & WARNINGS
+   ===================================================================== */
+
+#savedAssaysScreen, #guidelinesScreen, #exportScreen fieldset, #exportDatasetList {
+  overflow-y: auto;
+}
+
+/* Desktop-safe formatting for the Saved Assays items */
+.saved-assay-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border-base);
+}
+.assay-row-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+.assay-select-checkbox {
+  margin-top: 0.2rem !important; /* aligns with text visually */
+  flex-shrink: 0;
+}
+.assay-info {
+  font-weight: 600;
+  color: var(--text-main);
+}
+.assay-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.assay-actions button {
+  flex: 1;
+  min-width: 100px;
+}
+
+/* Checkbox fixes for the Export screen */
+#exportDatasetList label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border-base);
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  color: var(--text-main);
+}
+
+.warning {
+  color: var(--color-danger);
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.noscript-warning {
+  background-color: var(--bg-warning);
+  color: var(--text-warning);
+  border-bottom: 2px solid var(--border-warning);
+  padding: 1rem;
+  text-align: center;
+}
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; padding: 0;
+  margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;
+}
+
+.warmup-display { font-size: 3rem; font-weight: bold; }
+.export-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+.export-actions button { flex: 1 1 auto; }
+.navButtons { display: flex; gap: 1rem; margin-top: 1rem; }
+.navButtons button { flex: 1; }
+
+.toggle-label {
+  display: flex; 
+  flex-direction: row; 
+  align-items: center; 
+  gap: 0.75rem; 
+  font-size: 1rem;
+  color: var(--text-main); /* NEW: Forces high-contrast readable text */
+  cursor: pointer; /* NEW: Makes the text feel interactive */
+}
+
+.input-group { display: flex; flex-direction: column; flex: 1; }
+
+/* =====================================================================
+   11. BROWSER SPECIFIC FIXES (DISABLED STATES)
+   ===================================================================== */
+
+input:disabled, select:disabled, button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+[data-theme="dark"] input:disabled,
+[data-theme="dark"] select:disabled {
+  background-color: var(--bg-card) !important;
+  color: var(--text-muted) !important;
+  border-color: var(--border-base) !important;
+  opacity: 1 !important;
+  -webkit-text-fill-color: var(--text-muted) !important;
+}
+
+/* Disabled buttons keep a readable surface distinct from the card background */
+[data-theme="dark"] button:disabled {
+  background-color: var(--bg-input) !important;
+  color: var(--text-muted) !important;
+  border-color: var(--border-base) !important;
+  opacity: 0.55 !important;
+  -webkit-text-fill-color: var(--text-muted) !important;
+}
+
+/* =====================================================================
+   12. CSS STATE MACHINE (VISIBILITY ARCHITECTURE)
+   ===================================================================== */
+
+#setupScreen, 
+#assayScreen, 
+#exportScreen,
+#liveProgress, 
+#visualMetronomeContainer { 
+  display: none; 
+}
+
+body.state-setup #setupScreen,
+body.state-configured #assayScreen,
+body.state-poised #assayScreen,
+body.state-running #assayScreen,
+body.state-export #exportScreen {
+  display: flex;
+}
+
+body.state-running #liveProgress {
+  display: block; 
+}
+body.state-running #visualMetronomeContainer {
+  display: flex; 
+}
+
+body.state-configured #openSavedAssays,
+body.state-poised #openSavedAssays,
+body.state-running #openSavedAssays {
+  display: none;
+}
+
+body.state-overlay > main > section:not(#settingsScreen):not(#guidelinesScreen):not(#savedAssaysScreen) {
+  display: none !important;
+}
+
+/* Footer styling */
+.setup-footer {
+  margin-top: 3rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.setup-footer p {
+  margin: 0;
+  line-height: 1.4;
+}
+.setup-footer a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+.setup-footer a:hover {
+  text-decoration: underline;
+}
+
+/* =====================================================================
+   13. SCREEN TRANSITIONS
+   ===================================================================== */
+
+/*
+ * Strategy: every section that becomes visible via the CSS state machine
+ * gets a short slide-up + fade-in.  Because the state machine controls
+ * visibility via `display`, we can't animate `display` itself; instead
+ * we attach the animation to the section and let it play whenever the
+ * section enters the visual tree.
+ *
+ * The `animation-fill-mode: both` keeps the element invisible
+ * (opacity:0 / translateY offset) before the animation begins, which
+ * prevents the "flash of visible content" on slow devices.
+ */
+
+@keyframes screenSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes screenFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Primary screens — slide up */
+body.state-setup #setupScreen,
+body.state-export #exportScreen {
+  animation: screenSlideUp 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Assay screen — used across configured/poised/running, slides up once */
+body.state-configured #assayScreen,
+body.state-poised #assayScreen,
+body.state-running #assayScreen {
+  animation: screenSlideUp 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Overlay screens (settings, guidelines, saved assays) — gentle fade */
+#settingsScreen:not([hidden]),
+#guidelinesScreen:not([hidden]),
+#savedAssaysScreen:not([hidden]) {
+  animation: screenSlideUp 0.25s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Live progress counter fades in when the run starts */
+body.state-running #liveProgress {
+  animation: screenFadeIn 0.2s ease both;
+}
+
+/* Metronome container fades in */
+body.state-running #visualMetronomeContainer {
+  animation: screenFadeIn 0.2s ease both;
+}
+
+
+/* =====================================================================
+   14. TOAST NOTIFICATIONS
+   ===================================================================== */
+
+/* Per-type colour tokens */
+:root {
+  --toast-success-bg:     #f0fdf4;
+  --toast-success-border: #86efac;
+  --toast-success-icon:   #16a34a;
+  --toast-success-bar:    #16a34a;
+
+  --toast-error-bg:       #fef2f2;
+  --toast-error-border:   #fca5a5;
+  --toast-error-icon:     #dc2626;
+  --toast-error-bar:      #dc2626;
+
+  --toast-warning-bg:     #fffbeb;
+  --toast-warning-border: #fcd34d;
+  --toast-warning-icon:   #d97706;
+  --toast-warning-bar:    #d97706;
+
+  --toast-info-bg:        #eff6ff;
+  --toast-info-border:    #93c5fd;
+  --toast-info-icon:      #2563eb;
+  --toast-info-bar:       #2563eb;
+}
+
+[data-theme="dark"] {
+  --toast-success-bg:     #052e16;
+  --toast-success-border: #15803d;
+
+  --toast-error-bg:       #450a0a;
+  --toast-error-border:   #b91c1c;
+
+  --toast-warning-bg:     #451a03;
+  --toast-warning-border: #b45309;
+
+  --toast-info-bg:        #1e1b4b;
+  --toast-info-border:    #3730a3;
+}
+
+/* Container: fixed bottom-right stack */
+#toastContainer {
+  position: fixed;
+  bottom: max(1.25rem, env(safe-area-inset-bottom, 1.25rem));
+  right: 1.25rem;
+  left: 1.25rem;
+  max-width: 420px;
+  /* Right-align on wide screens */
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  z-index: 9999;
+  pointer-events: none;  /* container transparent to pointer events */
+}
+
+/* Individual toast */
+.toast {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
+  gap: 0 0.65rem;
+  padding: 0.85rem 0.9rem 0.65rem;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  background: var(--bg-card);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18), 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  pointer-events: auto;
+
+  /* Enter animation */
+  opacity: 0;
+  transform: translateX(24px) scale(0.97);
+  transition: none;
+}
+
+/* Keyboard focus ring — only shown for keyboard navigation, not mouse clicks */
+.toast:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+.toast--success { background: var(--toast-success-bg); border-color: var(--toast-success-border); }
+.toast--error   { background: var(--toast-error-bg);   border-color: var(--toast-error-border);   }
+.toast--warning { background: var(--toast-warning-bg); border-color: var(--toast-warning-border); }
+.toast--info    { background: var(--toast-info-bg);    border-color: var(--toast-info-border);    }
+
+/* Visible state (JS adds this class after a reflow) */
+@keyframes toastEnter {
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+.toast--visible {
+  animation: toastEnter 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Exit state */
+@keyframes toastExit {
+  to {
+    opacity: 0;
+    transform: translateX(32px) scale(0.95);
+    max-height: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+.toast--exiting {
+  animation: toastExit 0.22s ease-in forwards;
+  overflow: hidden;
+}
+
+/* Icon */
+.toast__icon {
+  display: flex;
+  align-items: center;
+  padding-top: 0.05rem;
+  flex-shrink: 0;
+}
+.toast--success .toast__icon { color: var(--toast-success-icon); }
+.toast--error   .toast__icon { color: var(--toast-error-icon);   }
+.toast--warning .toast__icon { color: var(--toast-warning-icon); }
+.toast--info    .toast__icon { color: var(--toast-info-icon);    }
+
+/* Message text */
+.toast__message {
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--text-main);
+  padding-top: 0.05rem;
+  word-break: break-word;
+}
+
+/* Close button */
+.toast__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  margin: -0.1rem -0.15rem 0 0;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  color: var(--text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition: opacity 0.15s ease, background 0.15s ease;
+}
+.toast__close:hover {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.08);
+}
+[data-theme="dark"] .toast__close:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Auto-dismiss progress bar (spans the full width at the bottom) */
+.toast__progress {
+  grid-column: 1 / -1;
+  height: 3px;
+  border-radius: 0 0 14px 14px;
+  margin: 0.45rem -0.9rem -0.65rem;
+  transform-origin: left center;
+  animation: toastProgress linear forwards;
+}
+.toast--success .toast__progress { background: var(--toast-success-bar); }
+.toast--error   .toast__progress { background: var(--toast-error-bar);   }
+.toast--warning .toast__progress { background: var(--toast-warning-bar); }
+.toast--info    .toast__progress { background: var(--toast-info-bar);    }
+
+@keyframes toastProgress {
+  from { transform: scaleX(1); }
+  to   { transform: scaleX(0); }
+}
+
+
+/* =====================================================================
+   SETTINGS PAGE — Premium Redesign
+   ===================================================================== */
+
+/* ── Settings screen: transparent card so fieldsets stand out ──────── */
+#settingsScreen {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  gap: 0;
+}
+
+/* ── Page header (Settings h2 with icon) ──────────────────────────── */
+.settings-page-header {
+  margin-bottom: 1.25rem;
+}
+
+.settings-page-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--text-main);
+}
+
+.settings-page-header h2 svg {
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+/* ── Each settings section (fieldset) as an elevated card ─────────── */
+.settings-card {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-base) !important;
+  border-radius: 16px !important;
+  padding: 1.2rem !important;
+  margin-bottom: 1rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1.1rem !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.06) !important;
+  transition: box-shadow 0.2s ease !important;
+}
+
+.settings-card:focus-within {
+  box-shadow: 0 4px 20px rgba(79, 70, 229, 0.1), 0 1px 4px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ── Section legend with inline icon ──────────────────────────────── */
+.settings-legend {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  padding: 0 !important;
+  margin: 0 0 0.1rem !important;
+  float: none !important; /* Override browser fieldset legend float */
+}
+
+.settings-legend svg {
+  flex-shrink: 0;
+  opacity: 0.9;
+}
+
+/* ── Theme: segmented pill control ────────────────────────────────── */
+.theme-segmented {
+  display: flex;
+  background: var(--bg-body);
+  border: 1px solid var(--border-base);
+  border-radius: 12px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.theme-segment {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.theme-segment input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.theme-segment-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 9px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.theme-segment input[type="radio"]:checked + .theme-segment-inner {
+  background: var(--bg-card);
+  color: var(--color-primary);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 0 0 1px var(--border-base);
+}
+
+.theme-segment-inner:hover {
+  background: var(--bg-card);
+  color: var(--text-main);
+}
+
+.theme-segment input[type="radio"]:focus-visible + .theme-segment-inner {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ── Audio sliders ─────────────────────────────────────────────────── */
+.settings-slider-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.settings-slider-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.settings-slider-label {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  color: var(--text-main) !important;
+  cursor: pointer;
+}
+
+.settings-slider-label svg {
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.settings-slider-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 4rem;
+  padding: 0.2rem 0.55rem;
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  transition: transform 0.1s ease;
+}
+
+/* Pulse animation when badge value changes */
+@keyframes badgePop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.settings-slider-badge.pop {
+  animation: badgePop 0.2s ease-out;
+}
+
+.settings-slider-track-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.slider-icon-min,
+.slider-icon-max {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+
+/* ── Custom range slider styling ───────────────────────────────────── */
+.settings-range {
+  /* Reset */
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1;
+  height: 6px;
+  border-radius: 999px;
+  border: none !important;
+  padding: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+  background-color: var(--border-base) !important;
+  outline: none !important;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.settings-range:focus-visible {
+  outline: 2px solid var(--color-primary) !important;
+  outline-offset: 3px !important;
+}
+
+/* WebKit thumb */
+.settings-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  border: 3px solid var(--bg-card);
+  box-shadow: 0 0 0 1px var(--color-primary), 0 2px 8px rgba(79, 70, 229, 0.35);
+  cursor: pointer;
+  transition: box-shadow 0.18s ease, transform 0.14s ease;
+}
+
+.settings-range::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 0 1px var(--color-primary), 0 4px 14px rgba(79, 70, 229, 0.5);
+  transform: scale(1.12);
+}
+
+.settings-range:active::-webkit-slider-thumb {
+  transform: scale(0.95);
+}
+
+/* Firefox thumb */
+.settings-range::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  border: 3px solid var(--bg-card);
+  box-shadow: 0 0 0 1px var(--color-primary), 0 2px 8px rgba(79, 70, 229, 0.35);
+  cursor: pointer;
+  transition: box-shadow 0.18s ease, transform 0.14s ease;
+}
+
+.settings-range::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--border-base);
+}
+
+/* ── Hint text below sliders ───────────────────────────────────────── */
+.settings-hint {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.45;
+  font-style: italic;
+}
+
+/* ── Voice option 2×2 card grid ───────────────────────────────────── */
+.voice-option-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+}
+
+.voice-option-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  padding: 0.85rem;
+  background: var(--bg-body);
+  border: 2px solid var(--border-base);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease, transform 0.14s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 92px;
+}
+
+.voice-option-card input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.voice-option-card:hover {
+  border-color: var(--color-primary);
+  background: var(--bg-card);
+  box-shadow: 0 2px 10px rgba(79, 70, 229, 0.1);
+  transform: translateY(-1px);
+}
+
+.voice-option-card:active {
+  transform: scale(0.97);
+}
+
+/* Selected state */
+.voice-option-card:has(input[type="radio"]:checked) {
+  border-color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 8%, var(--bg-card));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 18%, transparent), 0 2px 8px rgba(79, 70, 229, 0.15);
+}
+
+.voice-option-card:has(input[type="radio"]:focus-visible) {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Selected checkmark overlay */
+.voice-option-card:has(input[type="radio"]:checked)::after {
+  content: "";
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-primary) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center / 11px no-repeat;
+}
+
+.voice-option-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+  margin-bottom: 0.1rem;
+}
+
+.voice-option-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.voice-option-desc {
+  font-size: 0.73rem;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+/* ── Warmup toggle row ─────────────────────────────────────────────── */
+.settings-toggle-row {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  cursor: pointer;
+  padding: 0.1rem 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.settings-toggle-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  flex: 1;
+}
+
+.settings-toggle-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.settings-toggle-sub {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* iOS-style switch */
+.settings-switch {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+}
+
+.settings-switch-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  pointer-events: none;
+}
+
+.settings-switch-track {
+  display: flex;
+  align-items: center;
+  width: 50px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--border-input);
+  padding: 3px;
+  transition: background 0.22s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.settings-switch-input:checked ~ .settings-switch-track {
+  background: var(--color-primary);
+}
+
+.settings-switch-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+  flex-shrink: 0;
+}
+
+.settings-switch-input:checked ~ .settings-switch-track .settings-switch-thumb {
+  transform: translateX(22px);
+}
+
+.settings-switch-input:focus-visible ~ .settings-switch-track {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Warmup duration input below toggle */
+.settings-warmup-input {
+  padding: 0.85rem;
+  background: var(--bg-body);
+  border-radius: 12px;
+  border: 1px solid var(--border-base);
+}
+
+.settings-warmup-input label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-main);
+  flex-direction: row;
+  align-items: center;
+  gap: 0;
+}
+
+.settings-warmup-input input[type="number"] {
+  margin-top: 0.4rem;
+  width: 100%;
+}
+
+/* ── Back button with icon ─────────────────────────────────────────── */
+.settings-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.25rem;
+}
+
+/* ── Dark-mode adjustments ─────────────────────────────────────────── */
+[data-theme="dark"] .settings-range {
+  background-color: #334155 !important;
+}
+
+[data-theme="dark"] .theme-segmented {
+  background: var(--bg-input);
+}
+
+[data-theme="dark"] .voice-option-card {
+  background: var(--bg-input);
+}
+
+[data-theme="dark"] .voice-option-card:hover {
+  background: var(--bg-card);
+}
+
+[data-theme="dark"] .settings-warmup-input {
+  background: var(--bg-input);
+}
+
+/* Mobile: stack voice option grid to single column on narrow screens */
+@media (max-width: 380px) {
+  .voice-option-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile: full-width toasts at the bottom */
+@media (max-width: 480px) {
+  #toastContainer {
+    right: 0.75rem;
+    left: 0.75rem;
+    max-width: none;
+  }
+}
+
+
+/* =====================================================================
+   15. PERSISTENT NOTIFICATION BANNERS
+   ===================================================================== */
+
+/* Shared banner base */
+#runBanner,
+#idbWarningBanner {
+  display: none;  /* shown via JS / body class */
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem max(1rem, calc(50vw - 400px));
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* #5 — Recording banner (shown only while RUNNING) */
+#runBanner {
+  background: #fef3c7;
+  color: #92400e;
+  border-bottom: 1px solid #fcd34d;
+}
+[data-theme="dark"] #runBanner {
+  background: #451a03;
+  color: #fbbf24;
+  border-bottom-color: #78350f;
+}
+/* CSS-driven visibility: show only when state-running */
+body.state-running #runBanner {
+  display: flex;
+}
+
+/* #9 — IDB unavailability banner */
+#idbWarningBanner {
+  background: #fef2f2;
+  color: #991b1b;
+  border-bottom: 1px solid #fca5a5;
+}
+[data-theme="dark"] #idbWarningBanner {
+  background: #450a0a;
+  color: #f87171;
+  border-bottom-color: #7f1d1d;
+}
+/* When JS removes [hidden], display:flex takes effect */
+#idbWarningBanner:not([hidden]) {
+  display: flex;
+}
+
+/* Banner icons */
+#runBanner svg,
+#idbWarningBanner svg {
+  flex-shrink: 0;
+}
+
+
+/* =====================================================================
+   17. RANGE SLIDERS  (#15)
+   ===================================================================== */
+
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.slider-value {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  min-width: 52px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--border-base);
+  border: none;
+  padding: 0;
+  outline: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  box-shadow: none;
+}
+input[type="range"]:focus {
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  box-shadow: 0 1px 4px rgba(79,70,229,0.4);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 2px 8px rgba(79,70,229,0.55);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  border: none;
+  cursor: pointer;
+}
+[data-theme="dark"] input[type="range"] {
+  background: var(--border-input);
+}
+
+/* =====================================================================
+   18. EXPORT BUTTON LOADING STATE  (#30)
+   ===================================================================== */
+
+button.btn-loading {
+  opacity: 0.7;
+  pointer-events: none;
+  position: relative;
+  padding-left: 2.4rem;
+}
+
+button.btn-loading::before {
+  content: "";
+  position: absolute;
+  left: 0.85rem;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  margin-top: -7px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: btnSpin 0.7s linear infinite;
+}
+
+@keyframes btnSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* Secondary buttons have dark spinner */
+button.secondary.btn-loading::before {
+  border-color: rgba(0,0,0,0.2);
+  border-top-color: var(--text-main);
+}
+
+
+/* =====================================================================
+   19. SAVED ASSAYS EMPTY STATE  (#31)
+   ===================================================================== */
+
+.saved-assays-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  color: var(--text-muted);
+  gap: 0.75rem;
+}
+
+.saved-assays-empty svg {
+  opacity: 0.35;
+}
+
+.saved-assays-empty p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.saved-assays-empty strong {
+  display: block;
+  font-size: 1.05rem;
+  color: var(--text-main);
+  margin-bottom: 0.25rem;
+}
+
+
+
+
+/* =====================================================================
+   21. MOBILE RESPONSIVENESS
+   ===================================================================== */
+
+/* ── Global touch-friendly sizing ─────────────────────────────────────── */
+@media (pointer: coarse) {
+  /* All interactive elements get minimum 44px touch targets on touch devices */
+  button, select {
+    min-height: 44px;
+  }
+
+  /* Larger stepper buttons for fat fingers */
+  .stepper-btn {
+    width: 48px;
+    font-size: 1.25rem;
+  }
+
+  /* Bigger slider thumbs on touch */
+  input[type="range"]::-webkit-slider-thumb {
+    width: 26px;
+    height: 26px;
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 26px;
+    height: 26px;
+  }
+
+  /* Slightly bigger chip remove buttons */
+  .chip-remove {
+    width: 22px;
+    height: 22px;
+    font-size: 0.75rem;
+  }
+
+  /* Assay footer buttons always tall enough to tap easily */
+  #assayScreen > footer button {
+    min-height: 48px;
+  }
+}
+
+/* ── Small screens (phones, ≤ 480px) ──────────────────────────────────── */
+@media (max-width: 480px) {
+  /* Tighter main padding */
+  main {
+    padding: 0.5rem;
+  }
+
+  /* Section cards: slightly tighter */
+  section {
+    border-radius: 10px;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Header: compact padding */
+  .appHeader {
+    padding: 0.6rem 0.75rem;
+    padding-left: max(0.75rem, env(safe-area-inset-left));
+    padding-right: max(0.75rem, env(safe-area-inset-right));
+  }
+
+  /* Slightly smaller header title on phones */
+  .header-home-btn {
+    font-size: 0.9rem;
+    gap: 0.35rem;
+  }
+  .header-logo {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* Overflow menu full-width on small screens */
+  #overflowMenu {
+    right: 0.5rem;
+    left: 0.5rem;
+    min-width: 0;
+  }
+
+  /* Form layout: stack input rows vertically */
+  .input-row {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .input-row > .input-group {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  /* Fieldsets: slightly tighter padding */
+  #setupForm fieldset,
+  #settingsScreen fieldset {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Assay header: ensure select fills the available width nicely */
+  #assayScreen > header {
+    padding: 0.5rem 0.6rem;
+  }
+  #genotypeSelect {
+    font-size: 0.95rem;
+    padding: 0.5rem 2rem 0.5rem 0.6rem;
+  }
+
+  /* Toggle progress: compact pill style on phones */
+  #toggleProgress {
+    font-size: 0.82rem;
+    padding: 0.35rem 0.65rem;
+    min-height: 36px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Tap zone: tighten padding */
+  #tapZone {
+    padding: 0.5rem;
+    gap: 0.5rem;
+  }
+
+  /* Tap button: maximise touch area on phones */
+  #tapButton {
+    min-height: max(200px, 38vh);
+    font-size: clamp(1.75rem, 9vw, 3rem);
+    border-radius: 16px;
+  }
+
+  /* Progress panel: less height on small screens */
+  #assayProgress {
+    max-height: 22vh;
+  }
+
+  /* Export / nav buttons: stack vertically on tiny screens */
+  .export-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .export-actions button {
+    flex: none;
+    width: 100%;
+  }
+  .navButtons {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .navButtons button {
+    flex: none;
+    width: 100%;
+  }
+
+  /* Assay screen footer: stack buttons */
+  #assayScreen > footer {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.6rem;
+  }
+  #assayScreen > footer button {
+    flex: 1 1 calc(50% - 0.25rem);
+    min-width: 110px;
+  }
+
+  /* Modal: bottom-sheet style on mobile */
+  .modal-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+  .modal-content {
+    border-radius: 14px 14px 0 0;
+    max-height: 92vh;
+    max-width: none;
+    width: 100%;
+  }
+  .modal-header {
+    padding: 0.85rem 1rem;
+  }
+  #previewContainer {
+    padding: 0.75rem;
+  }
+  .modal-actions {
+    padding: 0.85rem 1rem;
+    padding-bottom: max(0.85rem, env(safe-area-inset-bottom));
+  }
+
+  /* Setup header */
+  .setupHeader h2 {
+    font-size: 1.2rem;
+  }
+
+  /* Smaller table text on phones */
+  table {
+    font-size: 0.78rem;
+  }
+  th, td {
+    padding: 0.35rem 0.25rem;
+  }
+
+  /* Saved assays: tighter layout */
+  .saved-assay-row {
+    padding: 0.75rem 0;
+    gap: 0.5rem;
+  }
+  .assay-actions {
+    gap: 0.4rem;
+  }
+  .assay-actions button {
+    min-width: 80px;
+    font-size: 0.85rem;
+    padding: 0.5rem 0.6rem;
+  }
+
+  /* Bulk actions in Saved Assays */
+  .bulk-actions {
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+    align-items: stretch !important;
+  }
+  .bulk-actions button {
+    width: 100% !important;
+  }
+
+  /* Settings: voice option grid stays 2-col except very small */
+  .voice-option-card {
+    min-height: 80px;
+    padding: 0.7rem;
+  }
+  .voice-option-icon {
+    font-size: 1.2rem;
+  }
+  .voice-option-desc {
+    font-size: 0.7rem;
+  }
+
+  /* Live progress text: slightly smaller */
+  .live-progress {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+  }
+}
+
+/* ── Extra-small screens (≤ 360px) ────────────────────────────────────── */
+@media (max-width: 360px) {
+  .header-home-btn span {
+    /* Hide title text on very narrow phones, keep logo */
+    display: none;
+  }
+
+  #tapButton {
+    min-height: max(160px, 35vh);
+    font-size: clamp(1.5rem, 8vw, 2.5rem);
+  }
+
+  .voice-option-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Medium screens (tablets, 481px–768px) ─────────────────────────────── */
+@media (min-width: 481px) and (max-width: 768px) {
+  main {
+    padding: 0.75rem;
+  }
+
+  /* Keep form inputs side-by-side but allow wrapping */
+  .input-row > .input-group {
+    min-width: 180px;
+  }
+
+  /* Tap button still needs a generous touch area */
+  #tapButton {
+    min-height: max(260px, 38vh);
+  }
+}
+
+/* ── Desktop (≥ 769px): single-column grid foundation ─────────────────── */
+@media (min-width: 769px) {
+  #assayScreen {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Wide desktop (≥ 1024px): single-column layout (two-panel removed) */
+
+
+
+/* ── Landscape orientation fixes ──────────────────────────────────────── */
+@media (orientation: landscape) and (max-height: 500px) {
+  /* Tap button: reduced min-height to avoid overflow; flex:1 handles the rest */
+  #tapButton {
+    min-height: max(120px, 28vh);
+    font-size: clamp(1.25rem, 5vw, 2rem);
+  }
+
+  /* Compact main padding in landscape */
+  main {
+    padding: 0.4rem 0.5rem;
+  }
+
+  /* Section cards: tighter in landscape */
+  section {
+    padding: 0.6rem;
+    margin-bottom: 0.4rem;
+  }
+
+  /* Shorter progress panel in landscape */
+  #assayProgress {
+    max-height: 18vh;
+  }
+
+  /* Metronome bar: thinner to save space */
+  #visualMetronomeContainer {
+    height: 8px;
+    margin-bottom: 0.2rem;
+  }
+
+  /* Warmup display: smaller in landscape */
+  .warmup-display {
+    font-size: 1.75rem;
+  }
+
+  /* Live progress: compact */
+  .live-progress {
+    font-size: 0.95rem;
+    margin-bottom: 0.15rem;
+  }
+
+  /* Assay screen footer: always horizontal in landscape */
+  #assayScreen > footer {
+    flex-wrap: nowrap;
+    padding: 0.5rem 0.6rem;
+  }
+
+  /* Header: minimal height in landscape */
+  .appHeader {
+    padding: 0.4rem max(0.75rem, calc(50vw - 400px));
+  }
+}
+
+/* ── Safe-area insets for notched / Dynamic Island devices ─────────────── */
+@supports (padding: max(0px, env(safe-area-inset-top))) {
+  .appHeader {
+    padding-top: max(0.65rem, env(safe-area-inset-top));
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
+  @media (max-width: 480px) {
+    .appHeader {
+      padding-top: max(0.6rem, env(safe-area-inset-top));
+      padding-left: max(0.75rem, env(safe-area-inset-left));
+      padding-right: max(0.75rem, env(safe-area-inset-right));
+    }
+  }
+
+  main {
+    padding-left: max(0.5rem, env(safe-area-inset-left));
+    padding-right: max(0.5rem, env(safe-area-inset-right));
+  }
+
+  /* Main content also respects bottom inset */
+  main {
+    padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+  }
+
+  /* Banners also respect safe areas */
+  #runBanner,
+  #idbWarningBanner {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
+  /* Assay footer respects home indicator on iPhone */
+  #assayScreen > footer {
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* ── Prevent text size inflation on mobile browsers ───────────────────── */
+html {
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* ── Smooth scrolling within overflow containers on iOS ────────────────── */
+#assayProgress,
+#savedAssaysScreen,
+#guidelinesScreen,
+#previewContainer,
+#exportDatasetList {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ── Prevent pull-to-refresh during assay (misfires during tapping) ───── */
+body.state-running {
+  overscroll-behavior-y: contain;
+}
+
+/* ── Better mobile focus styles: thicker rings on touch devices ────────── */
+@media (pointer: coarse) {
+  input:focus, select:focus, textarea:focus {
+    box-shadow: 0 0 0 4px var(--focus-ring);
+  }
+  .stepper-wrapper:focus-within {
+    box-shadow: 0 0 0 4px var(--focus-ring);
+  }
+  .chip-input-wrapper:focus-within {
+    box-shadow: 0 0 0 4px var(--focus-ring);
+  }
+}
+
+/* ── Genotype select: always fills available width ─────────────────────── */
+#genotypeSelect {
+  width: 100%;
+  max-width: none;
+}
+
+/* ── Toggle progress: aligned right in assay header ───────────────────── */
+#toggleProgress {
+  align-self: flex-end;
+  font-size: 0.88rem;
+  padding: 0.4rem 0.85rem;
+  min-height: 38px;
+  border-radius: 8px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Saved assays bulk-actions: proper layout ─────────────────────────── */
+.bulk-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-base);
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.bulk-actions label {
+  font-size: 0.9rem;
+  margin: 0;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.bulk-actions .danger {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+  width: auto;
+  flex: none;
+}
+
+/* ── Saved assays back button ─────────────────────────────────────────── */
+#closeSavedAssays {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+/* ── Export screen: select-all label separator ─────────────────────────── */
+.export-select-all-label {
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-base);
+}
+
+/* ── Bulk select label in saved assays ─────────────────────────────────── */
+.bulk-select-label {
+  font-size: 0.9rem;
+  margin: 0;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-main);
+}
+
+/* ── Assay screen: ensure the tapZone always uses remaining space ──────── */
+#assayScreen {
+  /* Needed so that flex children calculate height correctly */
+  height: 100%;
+}
+
